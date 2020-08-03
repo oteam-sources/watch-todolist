@@ -1,0 +1,86 @@
+{
+  "name": "watch-todolist",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "dev": "npm run serve",
+    "deploy": "cloudbase framework:deploy",
+    "deploy:client": "cloudbase framework:deploy client",
+    "deploy:database": "cloudbase framework:deploy database",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "eslint .",
+    "prettier": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "shryzhang",
+  "license": "MIT",
+  "dependencies": {
+    "@cloudbase/vue-provider": "^0.1.1",
+    "axios": "^0.19.2",
+    "chalk": "^4.1.0",
+    "core-js": "^3.6.4",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.2",
+    "tcb-js-sdk": "^1.10.6",
+    "vue": "^2.6.11"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.3.0",
+    "@vue/cli-plugin-eslint": "^4.3.0",
+    "@vue/cli-service": "^4.3.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.3.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-vue": "^6.2.2",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.11",
+    "prettier": "^2.0.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run prettier",
+      "npm run lint",
+      "git add ."
+    ]
+  },
+  "private": true,
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "vue": {
+    "publicPath": "/vue/",
+    "devServer": {
+      "port": 8090
+    }
+  }
+}
