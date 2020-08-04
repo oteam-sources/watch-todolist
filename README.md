@@ -1,6 +1,10 @@
-这是一个基于腾讯云**云开发数据库<a href="https://cloud.tencent.com/document/product/876/41801">实时推送</a>能力**开发的，web 端实时更新的 todolist 案例。
+# 多人在线实时 TodoList
+
+这是一个基于腾讯云云开发数据库<a href="https://cloud.tencent.com/document/product/876/41801">实时推送</a>能力开发的，web 端实时更新的 todolist 案例。
 <br>
 整个案例使用<a href="https://github.com/TencentCloudBase/cloudbase-framework"> CloudBase Framework 前后端一体化部署工具</a>，一站式完成项目的创建、开发以及部署。
+
+<br>
 
 # 效果展示
 
@@ -82,9 +86,8 @@ npm run deploy
 
 ## 3.线上预览
 
-打开云开发控制台，查看默认域名：
-![image](https://7368-shryzhang-test-13eb29-1258821855.tcb.qcloud.la/CloudBase-Framework/%E6%8E%A7%E5%88%B6%E5%8F%B0.png?sign=df006b27a9c0929563af879ee6eac171&t=1596526805)
+浏览器访问
 
-浏览器访问：http://默认域名/watch-todolist
+![image](https://7368-shryzhang-test-13eb29-1258821855.tcb.qcloud.la/CloudBase-Framework/deploy-success.jpg?sign=e1d530f57726a68f89e874b429e6b41c&t=1596529607)
 
 预览部署后的示例~
