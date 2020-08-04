@@ -1,0 +1,25 @@
+{
+  "envId": "your endId",
+  "framework": {
+    "plugins": {
+      "client": {
+        "use": "@cloudbase/framework-plugin-website",
+        "inputs": {
+          "buildCommand": "npm run build",
+          "outputPath": "dist",
+          "cloudPath": "/watch-todolist"
+        }
+      },
+      "database": {
+        "use": "@cloudbase/framework-plugin-database",
+        "inputs": {
+          "collections": [
+            {
+              "collectionName": "watch-todos"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
