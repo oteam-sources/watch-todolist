@@ -1,59 +1,90 @@
-<a href="https://github.com/TencentCloudBase/cloudbase-templates"><img src="https://main.qcloudimg.com/raw/9892a3212a49bdd65ba499f2da62ac23.png"></a>
+这是一个基于腾讯云**云开发数据库<a href="https://cloud.tencent.com/document/product/876/41801">实时推送</a>能力**开发的，web 端实时更新的 todolist 案例。
+<br>
+整个案例使用<a href="https://github.com/TencentCloudBase/cloudbase-framework"> CloudBase Framework 前后端一体化部署工具</a>，一站式完成项目的创建、开发以及部署。
 
-# Vue 全栈应用示例
+# 效果展示
 
-这个目录是基于云开发的一个 [Vue](https://cn.vuejs.org/) 全栈应用示例，包含 Vue + 云函数 + 静态网站部署，可以基于 **[CloudBase Framework](https://github.com/TencentCloudBase/cloudbase-framework)** 框架将项目一键部署到云开发环境
+![image](https://7368-shryzhang-test-13eb29-1258821855.tcb.qcloud.la/CloudBase-Framework/watch-todolist.gif?sign=e34acbd082e71817573eb0de168dd9c7&t=1596523227)
 
-## 线上演示地址
+示例访问地址：http://cloud.qinmudi.cn/watch-todolist
 
-[https://framework-1258016615.tcloudbaseapp.com/vue/](https://framework-1258016615.tcloudbaseapp.com/vue/)
+<br>
 
-## 部署一个 Vue 全栈应用
+# 技术背景
 
-### 步骤一. 准备工作
+## 1.腾讯云 CloudBase 数据库支持实时推送能力
 
-具体步骤请参照 [准备云开发环境和 CloudBase CLI 命令工具](https://github.com/TencentCloudBase/cloudbase-framework/blob/master/CLI_GUIDE.md)
+[实时推送](https://cloud.tencent.com/document/product/876/41801)
 
-### 步骤二. 初始化应用示例
+## 2.CloudBase Framework
 
-在命令行执行
+云开发官方出品的前后端一体化部署工具。
 
+可以一键创建并部署 vue、react、node、koa 等各类应用。
+
+目前已在 github [开源](https://github.com/TencentCloudBase/cloudbase-framework) 。
+
+<br>
+
+# 本地预览我们的示例
+
+## 1.git clone
+
+```shell
+git clone https://github.com/oteam-sources/watch-todolist.git
 ```
-cloudbase init --template vue
+
+## 2.配置 cloudbaserc.json
+
+配置自己的 envId。注意要使用**按量计费**环境。
+
+## 3.部署 database
+
+```shell
+yarn deploy:database
 ```
 
-### 步骤三. 一键部署
+## 4.本地启动
 
-进入到项目目录，在命令行执行
-
-```
-cloudbase framework:deploy
+```shell
+yarn dev
 ```
 
-## 开发命令及配置
+or
 
-### 本地开发
-
-```
+```shell
 npm run dev
 ```
 
-### 上线部署
+## 5.本地预览
 
+浏览器访问：http://localhost:8080/watch-todolist/
+
+<br>
+
+# 一键部署我们的示例
+
+## 1.配置 cloudbaserc.json
+
+配置自己的 envId。注意要使用**按量计费**环境。
+
+## 2.执行部署
+
+```shell
+yarn deploy
 ```
+
+or
+
+```shell
 npm run deploy
 ```
 
-### Lint
+## 3.线上预览
 
-```
-npm run lint
-```
+打开云开发控制台，查看默认域名：
+![image](https://7368-shryzhang-test-13eb29-1258821855.tcb.qcloud.la/CloudBase-Framework/%E6%8E%A7%E5%88%B6%E5%8F%B0.png?sign=df006b27a9c0929563af879ee6eac171&t=1596526805)
 
-### CloudBase Framework 相关开发配置
+浏览器访问：http://默认域名/watch-todolist
 
-查看 [CloudBase Framework 配置](https://github.com/TencentCloudBase/cloudbase-framework).
-
-### Vue 相关开发配置
-
-查看 [Configuration Reference](https://cli.vuejs.org/config/).
+预览部署后的示例~
