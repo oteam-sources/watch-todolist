@@ -1,4 +1,4 @@
-import $getDB from './index';
+import { getDB } from './index';
 
 // 正确数据
 const data = {
@@ -27,7 +27,7 @@ function getErrorData(err) {
 
 // 数据库集合获取
 async function getCollection() {
-  const db = await $getDB();
+  const db = await getDB();
   return db.collection('watch-todos');
 }
 
@@ -40,7 +40,7 @@ async function addItem(params) {
     const res = await myCollection.add(params);
     // 如果插入出错
     if (!res.id) {
-      return getFailData('add fail');
+      return getFailData('出现错误');
     }
   } catch (e) {
     return getErrorData(e);
@@ -56,7 +56,7 @@ async function deleteItem({ _id }) {
     const res = await myCollection.doc(_id).remove();
     // 如果没有成功删除
     if (res.deleted === 0) {
-      return getFailData('delete fail');
+      return getFailData('请不要删除别人的数据哦~');
     }
   } catch (e) {
     return getErrorData(e);
@@ -79,7 +79,7 @@ async function updateItem(params) {
     });
     // 如果没有成功更新
     if (res.updated === 0) {
-      return getFailData('update fail');
+      return getFailData('请不要修改别人的数据哦~');
     }
   } catch (e) {
     return getErrorData(e);

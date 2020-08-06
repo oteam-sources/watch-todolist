@@ -13,16 +13,21 @@
         )"
         :key="item._id"
         :data="item"
+        :owner="item._openid === userId"
         :colors="colors"
         :filter="filter"
-        @check="onCheck(item._id)"
-        @color-change="onColorChange(item._id)"
+        @check="onUpdate(item._id, 'checked')"
+        @color-change="onUpdate(item._id, 'color')"
+        @star-change="onUpdate(item._id, 'starred')"
         @new-color="onNewColor"
-        @star-change="onStarChange(item._id)"
         @remove="onRemove(item._id)"
       ></item>
     </ul>
     <add-form @add-item="addItem"></add-form>
+    <!-- 简版toast -->
+    <div class="toast" v-show="errMsg">
+      <p>{{ errMsg }}</p>
+    </div>
   </div>
 </template>
 
@@ -30,7 +35,7 @@
 import tabBar from './components/TabBar';
 import addForm from './components/AddForm';
 import item from './components/Item';
-import $getDB from './tcb';
+import { getDB, userId } from './tcb';
 import $service from './tcb/service';
 
 export default {
@@ -40,6 +45,11 @@ export default {
     addForm,
     item,
   },
+  computed: {
+    userId() {
+      return userId;
+    },
+  },
   data() {
     return {
       colors: ['all', 'ice', 'tang', 'jewel', 'rose'],
@@ -47,9 +57,17 @@ export default {
       filter: 'all',
       recentColor: 'ice',
       watcher: null,
+      errMsg: '',
     };
   },
   methods: {
+    // 统一错误处理
+    showToast(msg) {
+      this.errMsg = msg;
+      setTimeout(() => {
+        this.errMsg = '';
+      }, 2000);
+    },
     // 增加
     async addItem(text) {
       const newItem = {
@@ -59,22 +77,22 @@ export default {
         starred: false,
       };
       const res = await $service.addItem(newItem);
-      if (res && res.code === 0) {
-        this.getList();
+      if (!res || res.code !== 0) {
+        this.showToast(res.msg);
       }
     },
     // 删除
     async onRemove(_id) {
       const res = await $service.deleteItem({ _id });
-      if (res && res.code === 0) {
-        this.getList();
+      if (!res || res.code !== 0) {
+        this.showToast(res.msg);
       }
     },
     // 更新
     async updateItem(updatedItem) {
       const res = await $service.updateItem(updatedItem);
-      if (res && res.code === 0) {
-        this.getList();
+      if (!res || res.code !== 0) {
+        this.showToast(res.msg);
       }
     },
     // 拉取数据列表
@@ -82,22 +100,19 @@ export default {
       const res = await $service.getList();
       if (res && res.code === 0) {
         this.todoList = [...res.data.list];
+      } else {
+        this.showToast(res.msg);
       }
     },
-    onCheck(_id) {
+    onUpdate(_id, type) {
       let el = this.todoList.find((x) => x._id === _id);
-      el.checked = !el.checked;
-      this.updateItem(el);
-    },
-    onColorChange(_id) {
-      let el = this.todoList.find((x) => x._id === _id);
-      el.color = this.recentColor;
-      this.updateItem(el);
-    },
-    onStarChange(_id) {
-      let el = this.todoList.find((x) => x._id === _id);
-      el.starred = !el.starred;
-      this.updateItem(el);
+      const newItem = { ...el };
+      if (type === 'color') {
+        newItem.color = this.recentColor;
+      } else {
+        newItem[type] = !newItem[type];
+      }
+      this.updateItem(newItem);
     },
     onFilter(filter) {
       this.filter = filter;
@@ -111,7 +126,7 @@ export default {
     // 注册数据库变动的实时监听
     async registerTcbWatcher() {
       const getList = this.getList;
-      const db = await $getDB();
+      const db = await getDB();
       this.watcher = db
         .collection('watch-todos')
         .where({
@@ -138,7 +153,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -155,5 +170,28 @@ export default {
 
 .loading {
   text-align: center;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: transparent;
+  > p {
+    color: #fff;
+    padding: 12px 22px;
+    font-size: 18px;
+    border-radius: 4px;
+    background: rgba(17, 17, 17, 0.7);
+  }
+}
+.self {
+  background-color: red;
 }
 </style>

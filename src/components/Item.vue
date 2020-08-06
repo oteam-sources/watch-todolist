@@ -1,6 +1,9 @@
 <template>
   <li style="position: relative;">
-    <div :class="['collapsible-header', this.data.color + '-bd']">
+    <div
+      :class="['collapsible-header', this.data.color + '-bd']"
+      :style="self ? 'backgroundColor: #f1f1f1' : ''"
+    >
       <span
         :class="['material-icons', 'check', this.data.color + '-txt']"
         @click="onCheck"
@@ -42,9 +45,14 @@
 import itemMenu from './ItemMenu';
 
 export default {
-  props: ['colors', 'data'],
+  props: ['colors', 'data', 'owner'],
   components: {
     itemMenu,
+  },
+  computed: {
+    self() {
+      return this.owner;
+    },
   },
   data() {
     return {
